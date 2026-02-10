@@ -1,4 +1,5 @@
 const userModel = require('../model/user.model');
+const comparePassword = require('../utils/comparePassword');
 const HashPassword = require('../utils/hashing');
 const generateToken = require('../utils/tokenGenration');
 
@@ -49,6 +50,46 @@ const userRegister = async (req, res) => {
 }
 
 
+const userLogin= async (req,res) => {
+    try {
+        const {userEmail,userPassword}=req.body
+
+        if(!userEmail || !userPassword) return res.status(200).json({
+            message:"Enter All Credentials"
+        })
+
+        const user= await userModel.findOne({
+            userEmail
+        })
+
+        if(!user) return res.status(200).json({
+            message:"User Not Exist"
+        })
+
+        const isCorrectPasssword= await comparePassword(userPassword,user.userPassword)
+
+        if(!isCorrectPasssword) return res.status(200).json({
+            message:"Entered Password Is Incorrect"
+        })
+
+        res.status(200).json({
+            user:{
+                name:user.userName,
+                email:user.userEmail,
+                password:user.userPassword
+            }
+        })
+
+    } catch (error) {
+        console.log(`Error Has Occured While Loggin In ${error}`);
+        res.status(401).json({
+            message:"Error In Loggin"
+        })
+    }
+}
+
+
 module.exports={
-    userRegister
+    userRegister,
+    userLogin
 }
