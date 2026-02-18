@@ -15,8 +15,11 @@ const userRegister = async (req, res) => {
             userEmail
         })
         if(isExist) return res.status(400).json({
-            message:"User Already Exist"
+            message:"User Already Exist",
+            error:true,
+            success:false
         })
+        
 
         const hashPassword= await HashPassword(userPassword)
 
@@ -83,7 +86,9 @@ const userLogin= async (req,res) => {
     } catch (error) {
         console.log(`Error Has Occured While Loggin In ${error}`);
         res.status(401).json({
-            message:"Error In Loggin"
+            message:"Error In Loggin",
+            error:true,
+            success:false
         })
     }
 }
