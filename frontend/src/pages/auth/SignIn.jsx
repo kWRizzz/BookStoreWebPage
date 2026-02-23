@@ -1,17 +1,19 @@
 import React from 'react'
 import { useState } from 'react'
-
+import {Link, useNavigate} from 'react-router-dom'
 const SignIn = () => {
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
-
-    const handleSubmit= ()=>{
+    const navigate= useNavigate()
+    const handleSubmit= (e)=>{
+        e.preventDefault()
         console.log(name);
         console.log(email);
         console.log(password);
+        navigate(-1)
     }
 
     return (
@@ -124,6 +126,21 @@ const SignIn = () => {
                             type="submit"
                             name="submit"
                         />
+                    </div>
+                </div>
+                {/* link signi */}
+
+                <div>
+                    <div>
+                        <h1>
+                            Dont Have An Account 
+                            <Link
+                                className=' underline font-semibold'
+                                to='/login'
+                            >
+                                LogIn
+                            </Link>
+                        </h1>
                     </div>
                 </div>
             </div>
