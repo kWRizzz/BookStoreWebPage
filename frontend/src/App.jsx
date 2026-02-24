@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div
-      className=''
+      className=' text-black'
     >
       {/* button proto Type */}
       {/* <div>
